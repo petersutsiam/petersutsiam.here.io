@@ -17,26 +17,151 @@ body {
   min-height: 100vh;
   background-color: var(--dark-color);
   overflow: hidden;
+  animation: bg;
   perspective: 1000px;
+  mask-image: linear-gradient(black 70%, transparent 100%);
 }
 
-.night {
-  position: fixed;
-  left: 50%;
+.card{
+  display: inline-block;
+  top: 12%;
+  width: 600px;
+  padding: 1.2rem 2.2rem;
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.12);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  backdrop-filter: blur(6px) saturate(140%);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.105);
+  position: absolute;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.card::before {
+  content: "";
+  top: -40%;
+  left: -30%;
+  width: 160%;
+  height: 200%;
+  background-image: radial-gradient(20vmin 20vmin at 15% 25%, rgba(255,255,255,0.22), transparent 12%),
+                    radial-gradient(18vmin 18vmin at 80% 70%, rgba(255,255,255,0.12), transparent 14%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  transform: translateX(-20%);
+  animation: glass-shift 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes glass-shift {
+  0% { transform: translateX(-30%) translateY(0) scale(1); }
+  50% { transform: translateX(10%) translateY(2%) scale(1.02); }
+  100% { transform: translateX(-30%) translateY(0) scale(1); }
+}
+
+
+h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  color: #dc4c8d;
+  margin-bottom: 30px;
+  line-height: 1.35;
+}
+
+.buttons {
+  position: relative;
+  height: 78px;
+}
+
+button {
+  position: absolute;
+  padding: 14px 36px;
+  border-radius: 40px;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+button:active {
+  transform: scale(0.94);
+}
+
+#yes {
+  left: 12%;
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: #fff;
+  box-shadow: 0 15px 35px rgba(255,77,109,0.55);
+}
+
+#yes:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(255,77,109,0.7);
+}
+
+#no {
+  left: 55%;
+  background: rgba(255,255,255,0.9);
+  color: #777;
+}
+
+.hint {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #c5bfbf;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  h2 { font-size: 30px; }
+  .emoji { font-size: 58px; }
+  button { padding: 12px 28px; font-size: 15px; }
+  #yes { left: 8%; }
+  #no { left: 55%; }
+}
+
+.video {
+  position: absolute;
   top: 0;
-  transform: translateX(-50%);
   width: 100%;
-  height: 100%;
-  filter: blur(0.1vmin);
-  background-image: radial-gradient(ellipse at top, transparent 0%, var(--dark-color)), 
-  radial-gradient(ellipse at bottom, var(--dark-color), rgba(145, 233, 255, 0.2)), repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px,
-   rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), repeating-linear-gradient(189deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px),
-    repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(7, 107, 42), rgb(240, 240, 240));
+  height: 800px;
+  z-index: -1;
+  object-fit: cover;
+    mask-image: linear-gradient(black 0%, transparent 100%);
 }
 
 .flowers {
   position: relative;
-  transform: scale(0.9);
+  transform: scale(.7);
+  
+}
+
+/* Floating depth hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+  filter: blur(0.3px);
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: .3;
+  }
+  to {
+    transform: translateY(-120vh) scale(1.8);
+    opacity: 0;
+  }
 }
 
 .flower {
@@ -46,9 +171,10 @@ body {
   z-index: 10;
   --fl-speed: 0.3s;
 }
+
 .flower--1 {
   -webkit-animation: moving-flower-1 4s linear infinite;
-          animation: moving-flower-1 4s linear infinite;
+          animation: moving-flower-1 4s linear infinite;  
 }
 .flower--1 .flower__line {
   height: 70vmin;
@@ -281,6 +407,7 @@ body {
   height: 1vmin;
   background-color: rgb(255, 251, 0);
   border-radius: 50%;
+  -webkit-filter: blur(0.2vmin);
   filter: blur(0.2vmin);
   -webkit-animation: light-ans 4s linear infinite backwards;
           animation: light-ans 4s linear infinite backwards;
@@ -398,6 +525,7 @@ body {
     transform: rotate(-20deg) scale(0);
   }
 }
+  
 .flower__grass__leaf--2 {
   top: -5%;
   left: -110%;
@@ -609,9 +737,8 @@ body {
   height: 50vmin;
   border-top-left-radius: 100%;
   border-left: 2vmin solid #217005;
-  background-image: linear-gradient(to bottom, transparent, var(--dark-color) 60%);
- -webkit-mask
   -webkit-mask-image: linear-gradient(to top,transparent 30%,#24803e 60% );
+  mask-image: linear-gradient(to top,transparent 30%,#24803e 60% );
 }
 .flower__g-right--1 {
   -webkit-animation: flower-g-right-ans 2.5s linear infinite;
@@ -799,7 +926,7 @@ body {
   box-shadow: inset 0 2px 1vmin hsla(184deg, 97%, 58%, 0.2);
   background-image: linear-gradient(to bottom left, transparent, var(--dark-color)), linear-gradient(to bottom right, #064f0a 50%, transparent 50%, transparent);
   -webkit-mask-image: linear-gradient(to bottom right, #097149 50%, transparent 50%, transparent);
-  mask-image: linear-gradient(to bottom right, #0e8723 50%, transparent 50%, transparent);
+  mask-image: linear-gradient(to bottom right, #097149 50%, transparent 50%, transparent);
 }
 .flower__g-fr {
   position: absolute;
@@ -832,6 +959,7 @@ body {
   border-top-left-radius: 100%;
   border-left: 2vmin solid #147b47;
   -webkit-mask-image: linear-gradient(to top, transparent 25%, #0e4e2a 50%);
+  mask-image: linear-gradient(to top, transparent 25%, #0e4e2a 50%);
   position: relative;
   z-index: 1;
 }
@@ -845,6 +973,7 @@ body {
   box-shadow: inset 0 2px 1vmin hsla(184deg, 97%, 58%, 0.2);
   background-image: linear-gradient(to bottom left, transparent, var(--dark-color) 98%), linear-gradient(to bottom right, #106e18 45%, transparent 50%, transparent);
   -webkit-mask-image: linear-gradient(135deg, #175f22 40%, transparent 50%, transparent);
+  mask-image: linear-gradient(135deg, #175f22 40%, transparent 50%, transparent);
 }
 .flower__g-fr__leaf--1 {
   left: 20vmin;
@@ -974,6 +1103,7 @@ body {
 }
 .long-g--1 .leaf {
   -webkit-mask-image: linear-gradient(to top, transparent 40%, #196d2a 80%) !important;
+  mask-image: linear-gradient(to top, transparent 40%, #196d2a 80%) !important;
 }
 .long-g--1 .leaf--1 {
   --w: 5vmin;
@@ -989,6 +1119,7 @@ body {
 }
 .long-g--2 .leaf, .long-g--3 .leaf {
   -webkit-mask-image: linear-gradient(to top, transparent 50%, #176220 80%) !important;
+  mask-image: linear-gradient(to top, transparent 50%, #176220 80%) !important;
 }
 .long-g--2 .leaf--1, .long-g--3 .leaf--1 {
   left: -1vmin;
@@ -1000,6 +1131,7 @@ body {
 }
 .long-g--3 .leaf {
   -webkit-mask-image: linear-gradient(to top, transparent 40%, #176220 80%) !important;
+  mask-image: linear-gradient(to top, transparent 40%, #176220 80%) !important;
 }
 .long-g--4 {
   left: 25vmin;
@@ -1009,6 +1141,7 @@ body {
 }
 .long-g--4 .leaf {
   -webkit-mask-image: linear-gradient(to top, transparent 50%, #176220 80%) !important;
+  mask-image: linear-gradient(to top, transparent 50%, #176220 80%) !important;
 }
 .long-g--5 {
   left: 42vmin;
@@ -1041,6 +1174,7 @@ body {
   border-top-left-radius: 100%;
   border-left: 2vmin solid var(--c);
   -webkit-mask-image: linear-gradient(to top, transparent 20%, var(--dark-color));
+  mask-image: linear-gradient(to top, transparent 20%, var(--dark-color));
   transform-origin: bottom center;
 }
 .long-g .leaf--0 {
