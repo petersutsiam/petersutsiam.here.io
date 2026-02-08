@@ -36,6 +36,23 @@ body {
   position: absolute;
   pointer-events: auto;
   z-index: 10;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.card--1, .card--2 {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card.imposter {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) scale(1); }
+  25% { transform: translateX(-10px) scale(1.02); }
+  50% { transform: translateX(10px) scale(0.98); }
+  75% { transform: translateX(-5px) scale(1.01); }
 }
 
 @keyframes cardIn {
@@ -78,6 +95,11 @@ h2 {
   height: 78px;
 }
 
+.buttons2 {
+  position: relative;
+  height: 78px;
+}
+
 button {
   position: absolute;
   padding: 14px 36px;
@@ -106,7 +128,25 @@ button:active {
   box-shadow: 0 20px 40px rgba(255,77,109,0.7);
 }
 
+#yes2 {
+  left: 12%;
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: #fff;
+  box-shadow: 0 15px 35px rgba(255,77,109,0.55);
+}
+
+#yes2:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(255,77,109,0.7);
+}
+
 #no {
+  left: 55%;
+  background: rgba(255,255,255,0.9);
+  color: #777;
+}
+
+#no2 {
   left: 55%;
   background: rgba(255,255,255,0.9);
   color: #777;
@@ -141,9 +181,20 @@ button:active {
     align-items: center;
     margin-top: 8px;
   }
+  .buttons2 {
+    position: static;
+    height: auto;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+  }
   button { position: relative; padding: 12px 18px; font-size: 15px; box-shadow: none; }
   #yes { left: auto; }
   #no { left: auto; }
+  #yes2 { left: auto; }
+  #no2 { left: auto; }
 
   .flowers{
     transform: scale(.9);
