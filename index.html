@@ -16,10 +16,10 @@
     <title>My Valentine</title>
   </head>
   <body class="container">
-    <video autoplay loop muted plays-inline class="video">
+    <video id="bg-video" autoplay loop muted playsinline class="video">
       <source src="./aurora.mp4" type="video/mp4">
     </video>
-    <audio loop autoplay onloadeddata="this.volume=0.5">
+    <audio id="bg-audio" loop autoplay muted onloadeddata="this.volume=0.5">
       <source src="/waltz_for_moon_clean.mp3" type="audio/mpeg">
     </audio>
     <div class="card">
