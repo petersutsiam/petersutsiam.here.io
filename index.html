@@ -16,15 +16,27 @@
     <title>My Valentine</title>
   </head>
   <body class="container">
-    <video autoplay loop playsinline class="video">
-      <source src="./final2.mp4" type="video/mp4">
+    <video autoplay loop muted playsinline class="video">
+      <source src="./aurora.mp4" type="video/mp4">
     </video>
-    <div class="card">
-      <div class="emoji">🐱❤️</div>
-      <h2>Girl, Will you be my Valentine?</h2>
+    <audio id="bgAudio" autoplay loop>
+      <source src="./waltz_for_moon_clean.mp3" type="audio/mpeg">
+    </audio>
+    <div class="card card--1" id="card-1">
+      <div class="emoji">🔍</div>
+      <h2>Are you Cing?</h2>
       <div class="buttons">
-        <button id="yes">Yes 💖</button>
-        <button id="no">No 🙈</button>
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+      </div>
+      <div class="hint">Answer honestly... ✨</div>
+    </div>
+    <div class="card card--2" id="card-2" style="display: none;">
+      <div class="emoji">🐱❤️</div>
+      <h2>Aditi, Will you be my Valentine?</h2>
+      <div class="buttons">
+        <button id="yes2">Yes 💖</button>
+        <button id="no2">No 🙈</button>
       </div>
       <div class="hint">Some love stories don’t allow “no” ✨</div>
     </div>
